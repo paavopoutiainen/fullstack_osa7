@@ -1,27 +1,42 @@
 import React, { useState } from 'react'
 import { BrowserRouter, Switch, Route, Link, withRouter } from "react-router-dom";
+import { Table, Form, Button, Nav, Navbar } from 'react-bootstrap'
 
 const Menu = () => {
   const padding = {
     paddingRight: 5
   }
   return (
-    <div>
-      <Link to="/" style={padding}>anecdotes</Link>
-      <Link to="/create" style={padding}>create new</Link>
-      <Link href='#' style={padding}>about</Link>
-    </div>
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="mr-auto">
+        <Nav.Link><Link to="/" style={padding}>anecdotes</Link> </Nav.Link>
+        <Nav.Link><Link to="/create" style={padding}>create new</Link> </Nav.Link>
+        <Nav.Link><Link to='/' style={padding}>about</Link> </Nav.Link>
+        </Nav>
+        </Navbar.Collapse>
+    </Navbar>
   )
 }
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
-    <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} >
-        <Link to={`/anecdote/${anecdote.id}`}>{anecdote.content}</Link>
-        </li>)}
-    </ul>
+    <Table striped>
+      <tbody>
+      {anecdotes.map(anecdote => 
+        <tr key={anecdote.id}>
+          <td>
+            <Link to={`/anecdote/${anecdote.id}`}>{anecdote.content}</Link>
+          </td>
+          <td>
+            {anecdote.author}
+          </td>
+        </tr>)}
+      </tbody>
+    </Table>
+   
   </div>
 )
 
@@ -54,34 +69,33 @@ const CreateNewNoHistory = (props) => {
 
 
   const handleSubmit = (e) => {
+    console.log(e.target.content.value)
     e.preventDefault()
     props.addNew({
-      content,
-      author,
-      info,
+      content: e.target.content.value,
+      author: e.target.author.value,
+      info: e.target.info.value,
       votes: 0
     })
     props.history.push("/")
   }
 
   return (
-    <div>
+    <div >
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
-        </div>
-        <div>
-          author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
-        </div>
-        <div>
-          url for more info
-          <input name='info' value={info} onChange={(e) => setInfo(e.target.value)} />
-        </div>
-        <button>create</button>
-      </form>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>content:</Form.Label>
+          <Form.Control type="text" name="content"/>
+          <Form.Label>author:</Form.Label>
+          <Form.Control type="text" name="author"></Form.Control>
+          <Form.Label>url for more info:</Form.Label>
+          <Form.Control type="text" name="info"></Form.Control>
+          <Button variant="primary" type="submit">
+            Create
+          </Button>
+        </Form.Group>
+        </Form>
     </div>
   )
 
@@ -148,7 +162,7 @@ const App = () => {
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
   return (
-    <div>
+    <div class="container">
        <h1>Software anecdotes</h1>
       
      <BrowserRouter>
