@@ -6,7 +6,8 @@ const baseUrl = "http://localhost:3003/api/users"
 const getAll = async () => {
     try {
         const users = await axios.get(baseUrl)
-        return users
+        console.log(users.data)
+        return users.data
     }catch(exception){
         console.error(exception)
     }

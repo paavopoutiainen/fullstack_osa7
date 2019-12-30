@@ -107,13 +107,14 @@ function App(props) {
         )
     }
     const rows = () => {
-        const blogs = props.blogs.map((b, i) => <Blog modifyLikes={modifyLikes} deleteBlog={deleteBlog} key={i} blog = {b}/>)
+        const blogs = props.blogs.map((blog, i) => <Link key = {i} to={`/blogs/${blog.id}`}><h4>{blog.title} </h4></Link>)
         return blogs
     }
 
     return (
         <div>
             <h1>Blogs</h1>
+            <Link to="/users">Users</Link>
             <p>{props.user.name} logged in</p>
             <button onClick={logout}>Logout</button>
             <Notification />
