@@ -1,25 +1,22 @@
 import React, { useEffect } from 'react'
-import './App.css'
-import LoginForm from "./components/LoginForm"
-import Notification from "./components/Notification"
-import Togglable from "./components/Togglable"
-import blogService from "./services/blogService"
-import loginService from "./services/loginService"
-import BlogForm from "./components/BlogForm"
-import Blog from "./components/Blog"
-import Users from "./components/Users"
-import Blogs from "./components/Blogs"
-import { useField } from './hooks'
+import '../App.css'
+import LoginForm from "./LoginForm"
+import Notification from "./Notification"
+import Togglable from "./Togglable"
+import blogService from "../services/blogService"
+import loginService from "../services/loginService"
+import BlogForm from "./BlogForm"
+import Blog from "./Blog"
+import { useField } from '../hooks'
 import { connect } from "react-redux"
-import { newErrorNotification, newSuccessNotification } from "./reducers/notificationReducer"
-import { initBlogs, deleteBlog, updateBlog } from "./reducers/blogsReducer"
-import { setUser, emptyUser } from "./reducers/userReducer"
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom"
+import { newErrorNotification, newSuccessNotification } from "../reducers/notificationReducer"
+import { initBlogs, deleteBlog, updateBlog } from "../reducers/blogsReducer"
+import { setUser, emptyUser } from "../reducers/userReducer"
 
 
 
 
-function App(props) {
+function Blogs(props) {
     const username = useField("text")
     const password = useField("password")
 
@@ -138,4 +135,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { setUser, emptyUser, initBlogs, deleteBlog, updateBlog, newErrorNotification, newSuccessNotification })(App)
+export default connect(mapStateToProps, { setUser, emptyUser, initBlogs, deleteBlog, updateBlog, newErrorNotification, newSuccessNotification })(Blogs)
