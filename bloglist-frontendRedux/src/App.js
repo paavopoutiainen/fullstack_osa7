@@ -7,11 +7,14 @@ import blogService from "./services/blogService"
 import loginService from "./services/loginService"
 import BlogForm from "./components/BlogForm"
 import Blog from "./components/Blog"
+import Users from "./components/Users"
 import { useField } from './hooks'
 import { connect } from "react-redux"
 import { newErrorNotification, newSuccessNotification } from "./reducers/notificationReducer"
 import { initBlogs, deleteBlog, updateBlog } from "./reducers/blogsReducer"
 import { setUser, emptyUser } from "./reducers/userReducer"
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom"
+
 
 
 
@@ -90,7 +93,7 @@ function App(props) {
     const logout = () => {
 
         window.localStorage.removeItem("loggedBloglistappUser")
-        setUser(null)
+        props.setUser(null)
     }
 
     if (props.user === null) {
@@ -110,8 +113,8 @@ function App(props) {
     return (
         <div>
             <h1>Blogs</h1>
-            <button onClick={logout}>Logout</button>
             <p>{props.user.name} logged in</p>
+            <button onClick={logout}>Logout</button>
             <Notification />
             <Togglable buttonLabel="New blog" ref={blogFormRef}>
                 /////////////////////
@@ -119,7 +122,12 @@ function App(props) {
                     createNewBlog= {createNewBlog}
                 />
             </Togglable>
-
+            <BrowserRouter>
+                <Switch>
+                    <Route exact path="/" component={Users}/>
+                    <Route path="/users" component={Users}/>
+                </Switch>
+            </BrowserRouter>
 
             {rows()}
         </div>
