@@ -28,20 +28,12 @@ const Users = (props) => {
         return users
     }
 
-    const logout = () => {
-        window.localStorage.removeItem("loggedBloglistappUser")
-        props.setUser(null)
-        props.history.push("/")
-    }
-
     if(props.user === null){
         return null
     }
     return (
         <div>
             <h1>Users</h1>
-            <p>{props.user.name} logged in</p>
-            <button onClick={logout}>Logout</button>
             <table>
                 <thead>
                     <tr>

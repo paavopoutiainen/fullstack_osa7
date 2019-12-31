@@ -9,6 +9,10 @@ import BlogForm from "./components/BlogForm"
 import Blog from "./components/Blog"
 import Users from "./components/Users"
 import Blogs from "./components/Blogs"
+
+import User from "./components/User"
+
+
 import { useField } from './hooks'
 import { connect } from "react-redux"
 import { newErrorNotification, newSuccessNotification } from "./reducers/notificationReducer"
@@ -23,7 +27,6 @@ function App(props) {
     const username = useField("text")
     const password = useField("password")
 
-    const blogFormRef = React.createRef()
 
     useEffect(() => {
         props.initBlogs()
@@ -33,6 +36,8 @@ function App(props) {
         const user = JSON.parse(window.localStorage.getItem("loggedBloglistappUser"))
         if (user){
             props.setUser(user)
+            blogService.setToken(user.token)
+
         }
     }, [])
 
@@ -42,7 +47,7 @@ function App(props) {
             const user = await loginService.login({ username: username.value, password: password.value })
             console.log("user", user)
             window.localStorage.setItem("loggedBloglistappUser", JSON.stringify(user))
-            props.setUser(user)
+            await props.setUser(user)
             username.reset()
             password.reset()
             blogService.setToken(user.token)
@@ -54,45 +59,8 @@ function App(props) {
         }
     }
 
-    const createNewBlog = async (e, blog) => {
-        e.preventDefault()
-        try {
-            blogService.setToken(props.user.token)
-            blogFormRef.current.toggleVisibility()
-            await blogService.create(blog)
-            props.initBlogs()
-
-            props.newSuccessNotification(`a new blog ${blog.title} by ${blog.author} added`)
-
-        } catch(exception){
-            console.error("here", exception)
-            props.newErrorNotification("Was unable to save the blog")
-        }
-
-    }
-
-    const modifyLikes = async (blog) => {
-
-        try {
-            await props.updateBlog(blog)
-
-            console.log("hurya")
-        }catch(exception){
-            console.error(exception)
-        }
-    }
-    const deleteBlog = async (blog) => {
-        if(window.confirm(`Are you sure you want to remove blog ${blog.title} by ${blog.author}`)){
-            try {
-                await props.deleteBlog(blog)
-            } catch (exception) {
-                console.error(exception)
-            }
-        }
-    }
 
     const logout = () => {
-
         window.localStorage.removeItem("loggedBloglistappUser")
         props.setUser(null)
     }
@@ -106,28 +74,28 @@ function App(props) {
             </div>
         )
     }
-    const rows = () => {
-        const blogs = props.blogs.map((blog, i) => <Link key = {i} to={`/blogs/${blog.id}`}><h4>{blog.title} </h4></Link>)
-        return blogs
-    }
+
 
     return (
         <div>
-            <h1>Blogs</h1>
-            <Link to="/users">Users</Link>
-            <p>{props.user.name} logged in</p>
-            <button onClick={logout}>Logout</button>
-            <Notification />
-            <p>hellllooooou</p>
-            <Togglable buttonLabel="New blog" ref={blogFormRef}>
-                /////////////////////
-                <BlogForm
-                    createNewBlog= {createNewBlog}
-                />
-            </Togglable>
+            <BrowserRouter>
+                <h1>Blogs</h1>
+                <Link to="/">Blogs</Link>
+                <Link to="/users">Users</Link>
+                <p>{props.user.name} logged in</p>
+                <button onClick={logout}>Logout</button>
             
-
-            {rows()}
+                <Switch>
+                    <Route exact path="/" render={() => <Blogs></Blogs>}/>
+                    <Route exact path="/users" render = {() => <Users/>}/>
+                    <Route exact path = "/users/:id" render={({ match }) => {
+                        return <User id={match.params.id}></User>
+                    }}></Route>
+                    <Route exact path="/blogs/:id" render = {({ match }) => {
+                        return <Blog id={match.params.id}/>
+                    }}></Route>
+                </Switch>
+            </BrowserRouter>
         </div>
     )
 }

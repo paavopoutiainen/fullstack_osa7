@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { withRouter, Link } from "react-router-dom"
 import { connect } from "react-redux"
-import { initBlogs, deleteBlog, updateBlog } from "../reducers/blogsReducer"
+import { deleteBlog, updateBlog } from "../reducers/blogsReducer"
+import { compose } from "redux"
+import { withRouter } from "react-router-dom"
 
 
 
@@ -16,8 +17,8 @@ const Blog = (props) => {
         marginBottom: 5
     }
 
-    const adderOftheBlog = JSON.parse(window.localStorage.getItem("loggedBloglistappUser")).username
-    console.log("username", adderOftheBlog)
+    const currentUser = JSON.parse(window.localStorage.getItem("loggedBloglistappUser")).username
+    console.log("username", currentUser)
 
     const handleLikeClick = async () => {
         try {
@@ -32,26 +33,28 @@ const Blog = (props) => {
     const handleDeleteClick = async () => {
         if(window.confirm(`Are you sure you want to remove blog ${props.blog.title} by ${props.blog.author}`)){
             try {
+                props.history.push("/")
                 await props.deleteBlog(props.blog)
             } catch (exception) {
                 console.error(exception)
             }
         }
     }
+    if ( props.blog === undefined) { 
+        return null
+    }
 
     return (
         <div style={blogStyle} className="blog">
-            
+
             <div className = "blogInfo" >
                 <div >
-                    <h4 className = "titleAndAuthor">{props.blog.title} by {props.blog.author} </h4>
-                    <p> {props.blog.author} <br/>
-                        <a href={props.blog.url}>{props.blog.url}</a> <br/>
-                        {props.blog.user !== null  ? `Added by ${props.blog.user.name}`: null}
-                    </p>
+                    <h3 className = "titleAndAuthor">{props.blog.title} by {props.blog.author} </h3>
+                    <a href={props.blog.url}>{props.blog.url}</a> <br/>
+                    {props.blog.user !== null  ? `Added by ${props.blog.user.name}`: null}
                 </div>
                 <div>{props.blog.likes} likes <button onClick={() => handleLikeClick()}>like</button></div>
-                {adderOftheBlog === props.blog.user.username ?<div><button onClick={() => handleDeleteClick()}>DELETE</button></div>: null}
+                {currentUser === props.blog.user.username ?<div><button onClick={() => handleDeleteClick()}>DELETE</button></div>: null}
             </div>
         </div>
     )
@@ -69,4 +72,4 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-export default connect(mapStateToProps,{ updateBlog, deleteBlog })(Blog)
+export default compose(withRouter, connect(mapStateToProps,{ updateBlog, deleteBlog }))(Blog)
