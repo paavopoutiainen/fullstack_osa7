@@ -1,13 +1,9 @@
 import React, { useEffect } from 'react'
 import '../App.css'
-import LoginForm from "./LoginForm"
 import Notification from "./Notification"
 import Togglable from "./Togglable"
 import blogService from "../services/blogService"
-import loginService from "../services/loginService"
 import BlogForm from "./BlogForm"
-import Blog from "./Blog"
-import { useField } from '../hooks'
 import { connect } from "react-redux"
 import { newErrorNotification, newSuccessNotification } from "../reducers/notificationReducer"
 import { initBlogs, deleteBlog, updateBlog } from "../reducers/blogsReducer"
@@ -36,8 +32,6 @@ function Blogs(props) {
         }
     }, [])
 
-    
-
     const createNewBlog = async (e, blog) => {
         e.preventDefault()
         try {
@@ -64,7 +58,6 @@ function Blogs(props) {
         <div style={{ paddingTop: 10 }}>
             <Notification />
             <Togglable buttonLabel="New blog" ref={blogFormRef}>
-                /////////////////////
                 <BlogForm
                     createNewBlog= {createNewBlog}
                 />

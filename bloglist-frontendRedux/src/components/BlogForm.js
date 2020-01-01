@@ -1,41 +1,43 @@
 import React from 'react'
 import PropTypes from "prop-types"
-import  { useField } from '../hooks'
-import { propsForInputField } from "../utils/helperFunctions"
+import {  Form, Button } from 'react-bootstrap'
+
 
 
 const BlogForm = ({ createNewBlog }) => {
 
-    const title = useField("text")
-    const author = useField("text")
-    const url = useField("text")
-
     function createNew (e) {
-        createNewBlog(e, { title: title.value, author: author.value, url: url.value })
-        title.reset()
-        author.reset()
-        url.reset()
+        createNewBlog(e, { title: e.target.title.value,
+            author: e.target.author.value,
+            url: e.target.url.value
+        })
+        Array.from(e.target.querySelectorAll('[name]')).map(n => n.value = "")
     }
 
     return (
         <div>
-
-            <form>
-                <h1>create new</h1>
-                <div>
-                    <label>title: </label>
-                    <input {...propsForInputField(title)}></input>
-                </div>
-                <div>
-                    <label>author: </label>
-                    <input {...propsForInputField(author)}></input>
-                </div>
-                <div>
-                    <label>URL: </label>
-                    <input {...propsForInputField(url)}></input>
-                </div>
-                <button onClick={(e) => createNew(e)}>Create</button>
-            </form>
+            <Form onSubmit={createNew}>
+                <Form.Group>
+                    <Form.Label>title:</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="title"
+                    />
+                    <Form.Label>author:</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="author"
+                    />
+                    <Form.Label>URL:</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="url"
+                    />
+                    <Button variant="outline-primary" type="submit">
+                        Create
+                    </Button>
+                </Form.Group>
+            </Form>
         </div>
     )
 }

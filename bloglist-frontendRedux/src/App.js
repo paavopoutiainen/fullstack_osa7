@@ -39,12 +39,10 @@ function App(props) {
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
-            const user = await loginService.login({ username: username.value, password: password.value })
+            const user = await loginService.login({ username: e.target.username.value, password: e.target.password.value })
             console.log("user", user)
             window.localStorage.setItem("loggedBloglistappUser", JSON.stringify(user))
             await props.setUser(user)
-            username.reset()
-            password.reset()
             blogService.setToken(user.token)
 
         } catch (exception){

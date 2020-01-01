@@ -1,26 +1,28 @@
 import React from 'react'
-import { propsForInputField } from "../utils/helperFunctions"
-import { Table, Form, Button } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 
-const LoginForm = ({ username, password, handleLogin }) => {
+const LoginForm = ({ handleLogin }) => {
     return (
         <div >
-            <form>
-                <div >
-                    <p>testdude2</p>
-                    <label >Username: </label>
-                    <input {...propsForInputField(username)}></input>
-                </div>
-                <div>
-                    <p>s77#eJret</p>
-
-                    <label >Password: </label>
-                    <input {...propsForInputField(password)}></input>
-                </div>
-                <div>
-                    <button onClick={(e) => handleLogin(e)}>Login</button>
-                </div>
-            </form>
+            <Form onSubmit={handleLogin}>
+                <Form.Group>
+                    <Form.Label>username:</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name="username"
+                    />
+                    <Form.Label>password:</Form.Label>
+                    <Form.Control
+                        type="password"
+                        name="password"
+                    />
+                    <Button variant="outline-primary" type="submit">
+                        login
+                    </Button>
+                </Form.Group>
+            </Form>
+            <p>testdude2</p>
+            <p>s77#eJret</p>
         </div>
     )
 }
