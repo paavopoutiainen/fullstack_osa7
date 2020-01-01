@@ -21,9 +21,6 @@ const Navigation = (props) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     {props.user === null ? null : <SignedInLinks/> }
-                        
-
-                   
                     {props.user === null ? null : <Button variant="outline-danger" onClick={logout}>Logout</Button>}
                     
                 </Navbar.Collapse>

@@ -68,13 +68,11 @@ function App(props) {
 
     return (
         <div className="container">
-            <BrowserRouter>
+            <BrowserRouter >
 
                 <Navigation ></Navigation>
-                <p>{props.user.name} logged in</p>
-
                 <Switch>
-                    <Route exact path="/" render={() => <Blogs></Blogs>}/>
+                    <Route exact path="/" render={() => <Blogs ></Blogs>}/>
                     <Route exact path="/users" render = {() => <Users/>}/>
                     <Route exact path = "/users/:id" render={({ match }) => {
                         return <User id={match.params.id}></User>

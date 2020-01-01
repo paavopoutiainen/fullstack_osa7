@@ -61,7 +61,7 @@ function Blogs(props) {
     }
 
     return (
-        <div>
+        <div style={{ paddingTop: 10 }}>
             <Notification />
             <Togglable buttonLabel="New blog" ref={blogFormRef}>
                 /////////////////////

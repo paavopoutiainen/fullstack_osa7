@@ -13,8 +13,9 @@ const Blog = (props) => {
 
 
     const blogStyle = {
-        paddingTop: 10,
         paddingLeft: 2,
+        marginTop: 6,
+        paddingTop: 10,
         border: 'solid',
         borderWidth: 1,
         marginBottom: 5
@@ -59,7 +60,7 @@ const Blog = (props) => {
     return (
         <div style={blogStyle} className="blog">
 
-            <div className = "blogInfo" >
+            <div className = "blogInfo"  >
                 <div >
                     <h3 className = "titleAndAuthor">{props.blog.title} by {props.blog.author} </h3>
                     <a href={props.blog.url}>{props.blog.url}</a> <br/>
