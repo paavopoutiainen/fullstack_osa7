@@ -2,23 +2,19 @@ import React, { useEffect } from 'react'
 import './App.css'
 import LoginForm from "./components/LoginForm"
 import Notification from "./components/Notification"
-import Togglable from "./components/Togglable"
 import blogService from "./services/blogService"
 import loginService from "./services/loginService"
-import BlogForm from "./components/BlogForm"
 import Blog from "./components/Blog"
 import Users from "./components/Users"
 import Blogs from "./components/Blogs"
-
 import User from "./components/User"
-
-
+import Navigation from "./components/Navigation"
 import { useField } from './hooks'
 import { connect } from "react-redux"
 import { newErrorNotification, newSuccessNotification } from "./reducers/notificationReducer"
 import { initBlogs, deleteBlog, updateBlog } from "./reducers/blogsReducer"
 import { setUser, emptyUser } from "./reducers/userReducer"
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom"
+import { BrowserRouter, Switch, Route } from "react-router-dom"
 
 
 
@@ -26,7 +22,6 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom"
 function App(props) {
     const username = useField("text")
     const password = useField("password")
-
 
     useEffect(() => {
         props.initBlogs()
@@ -59,15 +54,10 @@ function App(props) {
         }
     }
 
-
-    const logout = () => {
-        window.localStorage.removeItem("loggedBloglistappUser")
-        props.setUser(null)
-    }
-
     if (props.user === null) {
         return (
-            <div>
+            <div className = "container">
+                <Navigation></Navigation>
                 <h2>Log into application</h2>
                 <Notification/>
                 <LoginForm username={username} password={password} handleLogin={handleLogin}/>
@@ -77,14 +67,12 @@ function App(props) {
 
 
     return (
-        <div>
+        <div className="container">
             <BrowserRouter>
-                <h1>Blogs</h1>
-                <Link to="/">Blogs</Link>
-                <Link to="/users">Users</Link>
+
+                <Navigation ></Navigation>
                 <p>{props.user.name} logged in</p>
-                <button onClick={logout}>Logout</button>
-            
+
                 <Switch>
                     <Route exact path="/" render={() => <Blogs></Blogs>}/>
                     <Route exact path="/users" render = {() => <Users/>}/>

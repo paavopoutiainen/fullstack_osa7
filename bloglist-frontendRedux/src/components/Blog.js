@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { connect } from "react-redux"
-import { deleteBlog, updateBlog } from "../reducers/blogsReducer"
+import { deleteBlog, updateBlog, initBlogs } from "../reducers/blogsReducer"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
+import { Button, Form, Col  } from "react-bootstrap"
+import blogService from "../services/blogService"
 
 
 
 
 const Blog = (props) => {
+
 
     const blogStyle = {
         paddingTop: 10,
@@ -40,7 +43,16 @@ const Blog = (props) => {
             }
         }
     }
-    if ( props.blog === undefined) { 
+
+    const onSubmit = async (e) => {
+        e.preventDefault()
+        const comment = e.target.comment.value
+        e.target.comment.value = ""
+        await blogService.createComment(comment, props.blog.id)
+        props.initBlogs()
+    }
+
+    if ( props.blog === undefined) {
         return null
     }
 
@@ -55,6 +67,27 @@ const Blog = (props) => {
                 </div>
                 <div>{props.blog.likes} likes <button onClick={() => handleLikeClick()}>like</button></div>
                 {currentUser === props.blog.user.username ?<div><button onClick={() => handleDeleteClick()}>DELETE</button></div>: null}
+                <div className="comments">
+                    <h4>Comments</h4>
+                    <div className="commentForm">
+                        <Form onSubmit={onSubmit}>
+                            <Form.Row>
+                                <Col>
+                                    <Form.Control
+                                        type="text"
+                                        name="comment"
+                                    />
+                                </Col>
+                                <Col>
+                                    <Button variant="outline-primary" type="submit">add comment</Button>
+                                </Col>
+                            </Form.Row>
+                        </Form>
+                    </div>
+                    <ul>
+                        {props.commentElements}
+                    </ul>
+                </div>
             </div>
         </div>
     )
@@ -65,11 +98,15 @@ const findById = (id, blogs) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
+    console.log("here", ownProps.id)
+    console.log("here2", state.blogs)
     const blog = findById(ownProps.id, state.blogs)
+    const commentElements = blog.comments.map((c, index) => <li key={index}>{c.commentStr}</li>)
 
     return {
-        blog: blog
+        blog: blog,
+        commentElements
     }
 }
 
-export default compose(withRouter, connect(mapStateToProps,{ updateBlog, deleteBlog }))(Blog)
+export default compose(withRouter, connect(mapStateToProps,{ initBlogs, updateBlog, deleteBlog }))(Blog)
