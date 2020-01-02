@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { deleteBlog, updateBlog, initBlogs } from "../reducers/blogsReducer"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
-import { Button, Form, Col  } from "react-bootstrap"
+import { Button, Form, Col, ListGroup  } from "react-bootstrap"
 import blogService from "../services/blogService"
 
 
@@ -16,8 +16,8 @@ const Blog = (props) => {
         paddingLeft: 2,
         marginTop: 6,
         paddingTop: 10,
-        border: 'solid',
-        borderWidth: 1,
+        //border: 'solid',
+        //borderWidth: 1,
         marginBottom: 5
     }
 
@@ -68,7 +68,7 @@ const Blog = (props) => {
                 </div>
                 <div>{props.blog.likes} likes <button onClick={() => handleLikeClick()}>like</button></div>
                 {currentUser === props.blog.user.username ?<div><button onClick={() => handleDeleteClick()}>DELETE</button></div>: null}
-                <div className="comments">
+                <div className="comments" style={{ paddingTop:10 }}>
                     <h4>Comments</h4>
                     <div className="commentForm">
                         <Form onSubmit={onSubmit}>
@@ -85,9 +85,12 @@ const Blog = (props) => {
                             </Form.Row>
                         </Form>
                     </div>
-                    <ul>
-                        {props.commentElements}
-                    </ul>
+                    <div>
+                        <ListGroup style={{ paddingTop: 5 }}>
+                            {props.commentElements}
+                        </ListGroup>
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -102,7 +105,7 @@ const mapStateToProps = (state, ownProps) => {
     console.log("here", ownProps.id)
     console.log("here2", state.blogs)
     const blog = findById(ownProps.id, state.blogs)
-    const commentElements = blog.comments.map((c, index) => <li key={index}>{c.commentStr}</li>)
+    const commentElements = blog.comments.map((c, index) => <ListGroup.Item key={index}>{c.commentStr}</ListGroup.Item>)
 
     return {
         blog: blog,

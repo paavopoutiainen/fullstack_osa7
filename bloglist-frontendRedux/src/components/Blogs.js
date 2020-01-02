@@ -11,6 +11,8 @@ import { setUser, emptyUser } from "../reducers/userReducer"
 import { Link } from "react-router-dom"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
+import { Button, Form, Col, ListGroup  } from "react-bootstrap"
+
 
 
 
@@ -50,7 +52,9 @@ function Blogs(props) {
 
 
     const rows = () => {
-        const blogs = props.blogs.map((blog, i) => <Link key = {i} to={`/blogs/${blog.id}`}><h4>{blog.title} </h4></Link>)
+        const blogs = props.blogs.map((blog, i) => <ListGroup.Item key = {i}>
+            <Link  to={`/blogs/${blog.id}`}><h4>{blog.title} </h4></Link>
+        </ListGroup.Item>)
         return blogs
     }
 
@@ -62,7 +66,9 @@ function Blogs(props) {
                     createNewBlog= {createNewBlog}
                 />
             </Togglable>
-            {rows()}
+            <ListGroup style={{ paddingTop: 10 }}>
+                {rows()}
+            </ListGroup>
         </div>
     )
 }

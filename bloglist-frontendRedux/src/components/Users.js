@@ -4,6 +4,8 @@ import { compose } from "redux"
 import { getUsers } from "../reducers/usersReducer"
 import { withRouter, Link } from "react-router-dom"
 import { setUser } from "../reducers/userReducer"
+import { Table } from 'react-bootstrap'
+
 
 
 
@@ -13,15 +15,12 @@ const Users = (props) => {
         props.getUsers()
     }, [])
 
-
-
-
     const users = () => {
         const users =  props.users.map((x, i) => {
             console.log(x)
             return <tr key = {i}>
                 <td><Link to={`/users/${x.id}`}>{x.name}</Link></td>
-                <td style={{textAlign: "center"}}>{x.blogs.length}</td>
+                <td >{x.blogs.length}</td>
             </tr>
 
         })
@@ -34,21 +33,17 @@ const Users = (props) => {
     return (
         <div>
             <h1>Users</h1>
-            <table>
+            <Table striped>
                 <thead>
                     <tr>
-                        <th>user</th>
-                        <th>blogs created</th>
+                        <th>User</th>
+                        <th>Blogs created</th>
                     </tr>
                 </thead>
                 <tbody>
                     {users()}
                 </tbody>
-                
-                
-            </table>
-            
-            
+            </Table>
         </div>
     )
 }

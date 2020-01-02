@@ -16,9 +16,6 @@ import { initBlogs, deleteBlog, updateBlog } from "./reducers/blogsReducer"
 import { setUser, emptyUser } from "./reducers/userReducer"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 
-
-
-
 function App(props) {
     const username = useField("text")
     const password = useField("password")
