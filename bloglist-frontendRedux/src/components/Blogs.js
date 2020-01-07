@@ -1,26 +1,23 @@
-import React, { useEffect } from 'react'
-import '../App.css'
+import React, { useEffect } from "react"
+import "../App.css"
 import Notification from "./Notification"
 import Togglable from "./Togglable"
 import blogService from "../services/blogService"
 import BlogForm from "./BlogForm"
 import { connect } from "react-redux"
-import { newErrorNotification, newSuccessNotification } from "../reducers/notificationReducer"
+import {
+    newErrorNotification,
+    newSuccessNotification
+} from "../reducers/notificationReducer"
 import { initBlogs, deleteBlog, updateBlog } from "../reducers/blogsReducer"
 import { setUser, emptyUser } from "../reducers/userReducer"
 import { Link } from "react-router-dom"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
-import { Button, Form, Col, ListGroup  } from "react-bootstrap"
-
-
-
-
-
+import { ListGroup } from "react-bootstrap"
 
 
 function Blogs(props) {
-
     const blogFormRef = React.createRef()
 
     useEffect(() => {
@@ -28,8 +25,10 @@ function Blogs(props) {
     }, [])
 
     useEffect(() => {
-        const user = JSON.parse(window.localStorage.getItem("loggedBloglistappUser"))
-        if (user){
+        const user = JSON.parse(
+            window.localStorage.getItem("loggedBloglistappUser")
+        )
+        if (user) {
             props.setUser(user)
         }
     }, [])
@@ -41,20 +40,23 @@ function Blogs(props) {
             props.initBlogs()
             blogFormRef.current.toggleVisibility()
 
-            props.newSuccessNotification(`a new blog ${blog.title} by ${blog.author} added`)
-
-        } catch(exception){
+            props.newSuccessNotification(
+                `a new blog ${blog.title} by ${blog.author} added`
+            )
+        } catch (exception) {
             console.error("here", exception)
             props.newErrorNotification("Was unable to save the blog")
         }
-
     }
 
-
     const rows = () => {
-        const blogs = props.blogs.map((blog, i) => <ListGroup.Item key = {i}>
-            <Link  to={`/blogs/${blog.id}`}><h4>{blog.title} </h4></Link>
-        </ListGroup.Item>)
+        const blogs = props.blogs.map((blog, i) => (
+            <ListGroup.Item key={i}>
+                <Link to={`/blogs/${blog.id}`}>
+                    <h4>{blog.title} </h4>
+                </Link>
+            </ListGroup.Item>
+        ))
         return blogs
     }
 
@@ -62,29 +64,29 @@ function Blogs(props) {
         <div style={{ paddingTop: 10 }}>
             <Notification />
             <Togglable buttonLabel="New blog" ref={blogFormRef}>
-                <BlogForm
-                    createNewBlog= {createNewBlog}
-                />
+                <BlogForm createNewBlog={createNewBlog} />
             </Togglable>
-            <ListGroup style={{ paddingTop: 10 }}>
-                {rows()}
-            </ListGroup>
+            <ListGroup style={{ paddingTop: 10 }}>{rows()}</ListGroup>
         </div>
     )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
         blogs: state.blogs,
         user: state.user
     }
 }
 
-export default compose(withRouter, connect(mapStateToProps, { 
-    setUser,
-    emptyUser,
-    initBlogs,
-    deleteBlog,
-    updateBlog,
-    newErrorNotification,
-    newSuccessNotification }))(Blogs)
+export default compose(
+    withRouter,
+    connect(mapStateToProps, {
+        setUser,
+        emptyUser,
+        initBlogs,
+        deleteBlog,
+        updateBlog,
+        newErrorNotification,
+        newSuccessNotification
+    })
+)(Blogs)

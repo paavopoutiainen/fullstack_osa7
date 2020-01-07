@@ -1,5 +1,5 @@
-import React from 'react'
-import { Form, Button } from 'react-bootstrap'
+import React from "react"
+import { Form, Button } from "react-bootstrap"
 
 const LoginForm = ({ handleLogin }) => {
     return (
@@ -8,11 +8,13 @@ const LoginForm = ({ handleLogin }) => {
                 <Form.Group>
                     <Form.Label>username:</Form.Label>
                     <Form.Control
+                        id="username"
                         type="text"
                         name="username"
                     />
                     <Form.Label>password:</Form.Label>
                     <Form.Control
+                        id="password"
                         type="password"
                         name="password"
                     />

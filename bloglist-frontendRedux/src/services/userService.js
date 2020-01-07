@@ -8,7 +8,7 @@ const getAll = async () => {
         const users = await axios.get(baseUrl)
         console.log(users.data)
         return users.data
-    }catch(exception){
+    } catch (exception) {
         console.error(exception)
     }
 }

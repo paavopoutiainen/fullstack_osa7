@@ -12,25 +12,21 @@ code {
     monospace;
 }
 
-.error{
+.error {
   color: red;
   background: lightgrey;
   font-size: 20px;
   border-style: solid;
   border-radius: 5px;
   padding: 10px;
-  margin-bottom: 10px
-
-  
+  margin-bottom: 10px;
 }
-.success{
+.success {
   color: rgb(6, 206, 56);
   background: lightgrey;
   font-size: 20px;
   border-style: solid;
   border-radius: 5px;
   padding: 10px;
-  margin-bottom: 10px
-
-  
+  margin-bottom: 10px;
 }

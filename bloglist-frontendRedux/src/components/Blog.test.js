@@ -9,16 +9,16 @@ describe("<Blog />", () => {
         title: "koodaus",
         author: "jukka",
         likes: 16,
-        user:{ name:"seppo" }
+        user: { name: "seppo" }
     }
 
-    let component 
+    let component
 
     beforeEach(() => {
         window.localStorage.setItem("loggedBloglistappUser", JSON.stringify({ token: "lkdjflkdjskjsd", name: "puavo", username: "gfdhgfhgfh" }))
 
         component = render(
-            <Blog blog={blog}/>
+            <Blog blog={blog} />
         )
     })
 
@@ -30,10 +30,10 @@ describe("<Blog />", () => {
     })
     test("at first only title should be shown", () => {
         const div = component.container.querySelector(".blogTitle")
-        expect(div).toHaveStyle( "display: block" )
+        expect(div).toHaveStyle("display: block")
 
         const div2 = component.container.querySelector(".blogInfo")
-        expect(div2).toHaveStyle( "display: none" )
+        expect(div2).toHaveStyle("display: none")
     })
 
     test("after the click rest of the info is shown as well", () => {
@@ -42,7 +42,7 @@ describe("<Blog />", () => {
         fireEvent.click(div)
 
         const div2 = component.container.querySelector(".blogInfo")
-        expect(div2).not.toHaveStyle( "display: none" )
+        expect(div2).not.toHaveStyle("display: none")
     })
 
 })

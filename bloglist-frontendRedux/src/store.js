@@ -4,7 +4,7 @@ import blogsReducer from "./reducers/blogsReducer"
 import userReducer from "./reducers/userReducer"
 import usersReducer from "./reducers/usersReducer"
 import thunk from "redux-thunk"
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { composeWithDevTools } from "redux-devtools-extension"
 
 
 const combined = combineReducers({

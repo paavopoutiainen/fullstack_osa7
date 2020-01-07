@@ -2,14 +2,14 @@ import blogService from "../services/blogService"
 
 
 const blogsReducer = (state = [], action) => {
-    switch(action.type) {
+    switch (action.type) {
     case "INIT_BLOGS":
         return action.data.sort((a, b) => b.likes - a.likes)
     case "DELETE_BLOG":
         return state.filter(x => x.id !== action.data.id)
     case "UPDATE_BLOG":
         return state.map(x => {
-            if(x.id === action.data.id){
+            if (x.id === action.data.id) {
                 console.log("xid", x.id)
                 console.log("actionid", action.data.id)
 
@@ -31,7 +31,7 @@ export const initBlogs = () => {
                 type: "INIT_BLOGS",
                 data: blogsFromDb
             })
-        } catch (exception){
+        } catch (exception) {
             console.error(exception)
         }
     }
@@ -47,7 +47,7 @@ export const deleteBlog = (blog) => {
                 data: blog
             })
             console.log("heeeei")
-        }catch(exception) {
+        } catch (exception) {
             console.error(exception)
         }
     }
@@ -61,7 +61,7 @@ export const updateBlog = (blog) => {
                 type: "UPDATE_BLOG",
                 data: blog
             })
-        }catch (exception) {
+        } catch (exception) {
             console.error(exception)
         }
     }

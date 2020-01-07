@@ -1,17 +1,12 @@
-import React, { useState } from 'react'
+import React from "react"
 import { connect } from "react-redux"
 import { deleteBlog, updateBlog, initBlogs } from "../reducers/blogsReducer"
 import { compose } from "redux"
 import { withRouter } from "react-router-dom"
-import { Button, Form, Col, ListGroup  } from "react-bootstrap"
+import { Button, Form, Col, ListGroup } from "react-bootstrap"
 import blogService from "../services/blogService"
 
-
-
-
-const Blog = (props) => {
-
-
+const Blog = props => {
     const blogStyle = {
         paddingLeft: 2,
         marginTop: 6,
@@ -21,21 +16,24 @@ const Blog = (props) => {
         marginBottom: 5
     }
 
-    const currentUser = JSON.parse(window.localStorage.getItem("loggedBloglistappUser")).username
-    console.log("username", currentUser)
+    const currentUser = JSON.parse(
+        window.localStorage.getItem("loggedBloglistappUser")
+    ).username
 
     const handleLikeClick = async () => {
         try {
             await props.updateBlog(props.blog)
-
-            console.log("hurya")
-        }catch(exception){
+        } catch (exception) {
             console.error(exception)
         }
     }
 
     const handleDeleteClick = async () => {
-        if(window.confirm(`Are you sure you want to remove blog ${props.blog.title} by ${props.blog.author}`)){
+        if (
+            window.confirm(
+                `Are you sure you want to remove blog ${props.blog.title} by ${props.blog.author}`
+            )
+        ) {
             try {
                 props.history.push("/")
                 await props.deleteBlog(props.blog)
@@ -45,7 +43,7 @@ const Blog = (props) => {
         }
     }
 
-    const onSubmit = async (e) => {
+    const onSubmit = async e => {
         e.preventDefault()
         const comment = e.target.comment.value
         e.target.comment.value = ""
@@ -53,34 +51,41 @@ const Blog = (props) => {
         props.initBlogs()
     }
 
-    if ( props.blog === undefined) {
+    if (props.blog === undefined) {
         return null
     }
 
     return (
         <div style={blogStyle} className="blog">
-
-            <div className = "blogInfo"  >
-                <div >
-                    <h3 className = "titleAndAuthor">{props.blog.title} by {props.blog.author} </h3>
-                    <a href={props.blog.url}>{props.blog.url}</a> <br/>
-                    {props.blog.user !== null  ? `Added by ${props.blog.user.name}`: null}
+            <div className="blogInfo">
+                <div>
+                    <h3 className="titleAndAuthor">
+                        {props.blog.title} by {props.blog.author}{" "}
+                    </h3>
+                    <a href={props.blog.url}>{props.blog.url}</a> <br />
+                    {props.blog.user ? `Added by ${props.blog.user.name}` : null}
                 </div>
-                <div>{props.blog.likes} likes <button onClick={() => handleLikeClick()}>like</button></div>
-                {currentUser === props.blog.user.username ?<div><button onClick={() => handleDeleteClick()}>DELETE</button></div>: null}
-                <div className="comments" style={{ paddingTop:10 }}>
+                <div>
+                    {props.blog.likes} likes{" "}
+                    <button onClick={() => handleLikeClick()}>like</button>
+                </div>
+                {currentUser === props.blog.user.username ? (
+                    <div>
+                        <button onClick={() => handleDeleteClick()}>DELETE</button>
+                    </div>
+                ) : null}
+                <div className="comments" style={{ paddingTop: 10 }}>
                     <h4>Comments</h4>
                     <div className="commentForm">
                         <Form onSubmit={onSubmit}>
                             <Form.Row>
                                 <Col>
-                                    <Form.Control
-                                        type="text"
-                                        name="comment"
-                                    />
+                                    <Form.Control type="text" name="comment" />
                                 </Col>
                                 <Col>
-                                    <Button variant="outline-primary" type="submit">add comment</Button>
+                                    <Button variant="outline-primary" type="submit">
+                                        add comment
+                                    </Button>
                                 </Col>
                             </Form.Row>
                         </Form>
@@ -90,7 +95,6 @@ const Blog = (props) => {
                             {props.commentElements}
                         </ListGroup>
                     </div>
-                    
                 </div>
             </div>
         </div>
@@ -102,15 +106,19 @@ const findById = (id, blogs) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log("here", ownProps.id)
-    console.log("here2", state.blogs)
+    console.log("blogsit", state.blogs)
     const blog = findById(ownProps.id, state.blogs)
-    const commentElements = blog.comments.map((c, index) => <ListGroup.Item key={index}>{c.commentStr}</ListGroup.Item>)
-
+    const commentElements = blog.comments.map((c, index) => (
+        <ListGroup.Item key={index}>{c.commentStr}</ListGroup.Item>
+    ))
+    console.log(blog)
     return {
         blog: blog,
         commentElements
     }
 }
 
-export default compose(withRouter, connect(mapStateToProps,{ initBlogs, updateBlog, deleteBlog }))(Blog)
+export default compose(
+    withRouter,
+    connect(mapStateToProps, { initBlogs, updateBlog, deleteBlog })
+)(Blog)

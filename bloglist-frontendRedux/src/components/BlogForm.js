@@ -1,17 +1,18 @@
-import React from 'react'
+import React from "react"
 import PropTypes from "prop-types"
-import {  Form, Button } from 'react-bootstrap'
+import { Form, Button } from "react-bootstrap"
 
 
 
 const BlogForm = ({ createNewBlog }) => {
 
-    function createNew (e) {
-        createNewBlog(e, { title: e.target.title.value,
+    function createNew(e) {
+        createNewBlog(e, {
+            title: e.target.title.value,
             author: e.target.author.value,
             url: e.target.url.value
         })
-        Array.from(e.target.querySelectorAll('[name]')).map(n => n.value = "")
+        Array.from(e.target.querySelectorAll("[name]")).map(n => n.value = "")
     }
 
     return (
@@ -20,16 +21,19 @@ const BlogForm = ({ createNewBlog }) => {
                 <Form.Group>
                     <Form.Label>title:</Form.Label>
                     <Form.Control
+                        id="title"
                         type="text"
                         name="title"
                     />
                     <Form.Label>author:</Form.Label>
                     <Form.Control
+                        id="author"
                         type="text"
                         name="author"
                     />
                     <Form.Label>URL:</Form.Label>
                     <Form.Control
+                        id="url"
                         type="text"
                         name="url"
                     />

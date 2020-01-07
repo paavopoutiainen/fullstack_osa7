@@ -15,8 +15,8 @@ const setToken = (newToken) => {
 }
 
 const create = async (newBlog) => {
-    console.log("yyyy",token)
-    const config= {
+    console.log("yyyy", token)
+    const config = {
         headers: { authorization: token }
     }
 
@@ -31,27 +31,27 @@ const update = async (newBlog) => {
 }
 
 const deleteBlog = async (blog) => {
-    const config= {
+    const config = {
         headers: { authorization: token }
     }
     console.log("deleteToken", token)
-    try{
+    try {
         const response = await axios.delete(`${baseUrl}/${blog.id}`, config)
         return response
-    } catch(exception){
+    } catch (exception) {
         console.error(exception)
     }
 
 
 }
 
-const createComment =  async (comment, blogId) => {
-    try{
+const createComment = async (comment, blogId) => {
+    try {
         const commentObject = {
             comment: comment
         }
         await axios.post(`${baseUrl}/${blogId}/comments`, commentObject)
-    }catch (exception) {
+    } catch (exception) {
         console.error(exception)
     }
 }

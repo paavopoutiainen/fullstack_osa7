@@ -9,7 +9,7 @@ describe("SimpleBlog component", () => {
         author: "jukka",
         likes: 16
     }
-    let component 
+    let component
 
     const mockHandler = jest.fn()
 

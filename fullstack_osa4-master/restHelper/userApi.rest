@@ -1,0 +1,8 @@
+post http://localhost:3003/api/users
+Content-Type: application/json
+
+{ 
+    "username": "testikolmonen",
+           "name": "paavo poutiainen",
+            "password": "fuLLStack9#00"
+}

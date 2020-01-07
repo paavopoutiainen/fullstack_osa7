@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import { connect } from "react-redux"
 import { compose } from "redux"
 import { setUser } from "../reducers/userReducer"
@@ -10,10 +10,10 @@ import { withRouter } from "react-router-dom"
 const User = (props) => {
 
     const blogs = () => {
-        return props.userWithBlogs.blogs.map((x, i) => <li key = {i}>{x.title}</li>)
+        return props.userWithBlogs.blogs.map((x, i) => <li key={i}>{x.title}</li>)
     }
 
-    if(props.userInStore === undefined || props.userWithBlogs === undefined) {
+    if (props.userInStore === undefined || props.userWithBlogs === undefined) {
         return null
     }
 

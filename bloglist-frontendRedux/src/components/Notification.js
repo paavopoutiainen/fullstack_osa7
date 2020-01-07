@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react"
 import { connect } from "react-redux"
 import { newErrorNotification, newSuccessNotification } from "../reducers/notificationReducer.js"
 
 const Notification = (props) => {
-    if (props.message === null && props.errorMessage === null){
+    if (props.message === null && props.errorMessage === null) {
         return null
     }
     if (props.message !== null && props.errorMessage === null) {

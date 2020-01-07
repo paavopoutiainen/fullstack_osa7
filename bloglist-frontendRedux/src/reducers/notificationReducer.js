@@ -1,5 +1,5 @@
 const notificationReducer = (state = { success: null, error: null }, action) => {
-    switch(action.type) {
+    switch (action.type) {
     case "NEW_SUCCESS":
         return { success: action.data, error: null }
     case "NEW_ERROR":

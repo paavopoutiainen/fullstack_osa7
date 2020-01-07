@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import { compose } from "redux"
 import { getUsers } from "../reducers/usersReducer"
 import { withRouter, Link } from "react-router-dom"
 import { setUser } from "../reducers/userReducer"
-import { Table } from 'react-bootstrap'
+import { Table } from "react-bootstrap"
 
 
 
@@ -16,10 +16,10 @@ const Users = (props) => {
     }, [])
 
     const users = () => {
-        const users =  props.users.map((x, i) => {
+        const users = props.users.map((x, i) => {
             console.log(x)
-            return <tr key = {i}>
-                <td><Link to={`/users/${x.id}`}>{x.name}</Link></td>
+            return <tr key={i}>
+                <td><Link id="usersname" to={`/users/${x.id}`}>{x.name}</Link></td>
                 <td >{x.blogs.length}</td>
             </tr>
 
@@ -27,7 +27,7 @@ const Users = (props) => {
         return users
     }
 
-    if(props.user === null){
+    if (props.user === null) {
         return null
     }
     return (
