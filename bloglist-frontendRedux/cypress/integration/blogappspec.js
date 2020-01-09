@@ -29,7 +29,48 @@ describe("Blog App", function () {
             cy.contains("paavo poutiainen logged in")
 
         })
+        describe("a blog created", function () {
+            beforeEach(function () {
+                cy.contains("New blog")
+                    .click()
+                cy.get("#title")
+                    .type("testiBlogi123")
+                cy.get("#author")
+                    .type("testiauthor")
+                cy.get("#url")
+                    .type("www.testiblogi.fi")
+                cy.contains("Create").click()
+            })
+            it("a blog's view works", function () {
+                cy.get("#blogslink")
+                    .click()
+                cy.contains("Comments")
+                cy.contains("DELETE")
+                cy.contains("like")
+            })
+            it("a blog can be deleted", function () {
+                cy.get("#blogslink")
+                    .click()
+                cy.contains("DELETE")
+                    .click()
+                cy.on("window:confirm", function () {
+                    return true
+                })
+                cy.contains("New blog")
+            })
+            it("like button works", function () {
+                cy.get("#blogslink")
+                    .click()
+                cy.contains("like")
+                    .click()
 
+                cy.contains("1 likes")
+                cy.contains("like")
+                    .click()
+                cy.contains("2 likes")
+
+            })
+        })
         it("adding a blog works", function () {
             cy.contains("New blog")
                 .click()

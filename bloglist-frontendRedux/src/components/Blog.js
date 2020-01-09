@@ -67,11 +67,11 @@ const Blog = props => {
                 </div>
                 <div>
                     {props.blog.likes} likes{" "}
-                    <button onClick={() => handleLikeClick()}>like</button>
+                    <button data-cy="like" onClick={() => handleLikeClick()}>like</button>
                 </div>
                 {currentUser === props.blog.user.username ? (
                     <div>
-                        <button onClick={() => handleDeleteClick()}>DELETE</button>
+                        <button data-cy="delete" onClick={() => handleDeleteClick()}>DELETE</button>
                     </div>
                 ) : null}
                 <div className="comments" style={{ paddingTop: 10 }}>

@@ -53,7 +53,7 @@ function Blogs(props) {
         const blogs = props.blogs.map((blog, i) => (
             <ListGroup.Item key={i}>
                 <Link to={`/blogs/${blog.id}`}>
-                    <h4>{blog.title} </h4>
+                    <h4 id="blogslink">{blog.title} </h4>
                 </Link>
             </ListGroup.Item>
         ))
